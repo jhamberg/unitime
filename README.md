@@ -68,7 +68,7 @@ You can also individually decide the target unit for each variable:
 const { ns, s } = require("unitime")
 
 ns`100`.millis(); // 0.0001
-s(100).minutes(); // 100000
+s(100).minutes(); // 1.6666666666666667
 ```
 
 ## License
