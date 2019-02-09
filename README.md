@@ -3,7 +3,7 @@
 [![NPM Version][npm-version]][npm-url]
 [![License][license-badge]][license-url]
 
-Unitime is a lightweight JavaScript utility module which provides powerful, human-readable functions for converting various time units. The project was inspired by Java's [TimeUnit](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/TimeUnit.html) by Doug Lea. 
+Unitime is a lightweight JavaScript utility module which provides powerful, human-readable functions for converting various time units. The project was inspired by Java's [TimeUnit](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/TimeUnit.html) by Doug Lea.
 
 ## Human-readable, yet concise
 
@@ -11,7 +11,7 @@ Unitime is a lightweight JavaScript utility module which provides powerful, huma
 const { h, ms } = require("unitime");
 
 h`720`.days();  // evaluates to 7
-ms`3`.nanos();  // evaluates to 3000000 
+ms`3`.nanos();  // evaluates to 3000000
 ```
 
 ## Installation
@@ -25,7 +25,7 @@ npm install unitime
 [license-url]: https://opensource.org/licenses/MIT
 
 ## Description
-Unitime provides lightweight methods for converting between different units of time with a human-readable syntax. The idea is reducing the mental load caused by interpreting complex time declarations like `24*60*60*1000` or `86400000` which both describe the number of milliseconds in a single day. Using this library we can simply write `` d`1` ``, or `d(1)` if you prefer to not use [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). 
+Unitime provides lightweight methods for converting between different units of time with a human-readable syntax. The idea is reducing the mental load caused by interpreting complex time declarations like `24*60*60*1000` or `86400000` which both describe the number of milliseconds in a single day. Using this library we can simply write `` d`1` ``, or `d(1)` if you prefer to not use [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
 
 Time formats that are currently supported are:
 - Nanoseconds (ns)
@@ -56,7 +56,6 @@ The implementation uses clever caching to keep as little information in memory a
 You can predefine the target unit by using `.to(unit)` when initializing:
 
 ```js
-
 const { ns, s } = require("unitime").to("ms")
 
 ns`100`; // 0.0001
