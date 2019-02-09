@@ -5,7 +5,7 @@ import lazy from "./decorator/lazy";
  * @summary Utility for handling time units in a concise, human-readable manner
  * 
  * This library provides utility methods for converting between different units 
- * of time with a human-readable syntax. The idea is reduced the mental load 
+ * of time with a human-readable syntax. The idea is reducing the mental load 
  * caused by complex time declarations like `24*60*60*1000` or `86400000` which
  * both describe the number of milliseconds in a day. Using this library, the 
  * unit above can be simply described as:
