@@ -134,26 +134,36 @@ class Scale {
 }
 
 namespace Transform {
-    export function result(duration: number, source: Scale, destination?: string, ): number {
-        if (!destination) {
+    export function result(dura: number, src: Scale, dest?: string): number {
+        const duration = Number(dura);
+        if (!duration) {
+            throw new Error(`Failed to interpret "${dura}" as a number!`);
+        }
+
+        if (!dest) {
             throw new Error("Incorrect initialization!");
         }
 
-        switch (destination) {
-            case "ns": return toNanos(source, duration);
-            case "us": return toMicros(source, duration);
-            case "ms": return toMillis(source, duration);
-            case "s": return toSeconds(source, duration);
-            case "min": return toMinutes(source, duration);
-            case "h": return toHours(source, duration);
-            case "d": return toDays(source, duration); 
+        switch (dest) {
+            case "ns": return toNanos(src, duration);
+            case "us": return toMicros(src, duration);
+            case "ms": return toMillis(src, duration);
+            case "s": return toSeconds(src, duration);
+            case "min": return toMinutes(src, duration);
+            case "h": return toHours(src, duration);
+            case "d": return toDays(src, duration);
             default: {
-                throw new Error(`Unknown time unit ${destination}`);
+                throw new Error(`Unknown time unit ${dest}`);
             }
         }
     }
     
-    export function converters(source: Scale, duration: number): Convertable {
+    export function converters(source: Scale, dura: number): Convertable {
+        const duration = Number(dura);
+        if (!duration) {
+            throw new Error(`Failed to interpret "${dura}" as a number!`);
+        }
+
         const converter = (destination: string) =>
             result.bind(null, duration, source, destination);
 
