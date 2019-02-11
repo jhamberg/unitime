@@ -3,3 +3,6 @@ lib/
 test/
 jest.config.js
 coverage/
+tsconfig.json
+.travis.yml
+*.code-workspace
