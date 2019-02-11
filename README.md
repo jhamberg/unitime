@@ -1,8 +1,9 @@
 # Unitime - Simplified time units
 
 [![NPM Version][npm-version]][npm-url]
+[![Build Status][travis-badge]][travis-url]
+[![Code Coverage][coveralls-badge]][coveralls-url]
 [![License][license-badge]][license-url]
-
 
 Unitime is a lightweight JavaScript utility module which provides powerful, human-readable functions for converting various time units. The project was inspired by Java's [TimeUnit](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/TimeUnit.html) by [Doug Lea](http://g.oswego.edu/).
 
@@ -19,11 +20,6 @@ ms`3`.nanos();  // evaluates to 3000000
 ```bash
 npm install unitime
 ```
-
-[npm-version]: https://img.shields.io/npm/v/unitime.svg?style=flat-square
-[npm-url]: https://www.npmjs.com/package/unitime
-[license-badge]: https://img.shields.io/badge/License-MIT-yellow.svg
-[license-url]: https://opensource.org/licenses/MIT
 
 ## Description
 Unitime provides lightweight methods for converting between different units of time with a human-readable syntax. The idea is reducing the mental load caused by interpreting complex time declarations like `24*60*60*1000` or `86400000` which both describe the number of milliseconds in a single day. Using this library you can simply write `d(1)`, or `` `d(1)` `` if you prefer [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
@@ -73,3 +69,12 @@ s(100).minutes(); // 1.6666666666666667
 
 ## License
 This work by [Jonatan Hamberg](https://www.cs.helsinki.fi/u/hajo/) is licensed under the [MIT License](https://tldrlegal.com/license/mit-license).
+
+[npm-version]: https://img.shields.io/npm/v/unitime.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/unitime
+[license-badge]: https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square
+[license-url]: https://opensource.org/licenses/MIT
+[travis-badge]: https://img.shields.io/travis/jhamberg/unitime/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/jhamberg/unitime
+[coveralls-badge]: https://img.shields.io/coveralls/jhamberg/unitime/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/jhamberg/unitime?branch=master

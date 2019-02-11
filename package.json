@@ -6,7 +6,7 @@
   "types": "dist/Unitime.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "jest --coverage",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
