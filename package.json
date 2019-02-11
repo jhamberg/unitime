@@ -6,8 +6,7 @@
   "types": "dist/Unitime.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest --coverage",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -33,7 +32,6 @@
   ],
   "author": "Jonatan Hamberg",
   "devDependencies": {
-    "coveralls": "^3.0.2",
     "eslint": "^5.13.0",
     "jest": "^24.1.0",
     "typescript": "^3.3.3"
