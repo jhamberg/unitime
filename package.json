@@ -1,6 +1,6 @@
 {
   "name": "unitime",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Convert between time units using human-readable syntax. Similar to TimeUnit in Java.",
   "main": "dist/Unitime.js",
   "types": "dist/Unitime.d.ts",
