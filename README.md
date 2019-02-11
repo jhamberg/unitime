@@ -22,7 +22,7 @@ npm install unitime
 ```
 
 ## Description
-Unitime provides lightweight methods for converting between different units of time with a human-readable syntax. The idea is reducing the mental load caused by interpreting complex time declarations like `24*60*60*1000` or `86400000` which both describe the number of milliseconds in a single day. Using this library you can simply write `d(1)`, or `` `d(1)` `` if you prefer [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
+Unitime provides lightweight methods for converting between different units of time with a human-readable syntax. The idea is reducing the mental load caused by interpreting complex time declarations like `24*60*60*1000` or `86400000` which both describe the number of milliseconds in a single day. Using this library you can simply write `d(1)`, or `` d`1` `` if you prefer [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
 
 Time formats that are currently supported are:
 - Nanoseconds (ns)
