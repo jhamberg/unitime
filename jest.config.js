@@ -1,6 +1,9 @@
 module.exports = {
-  clearMocks: true,
-  coverageDirectory: "coverage",
-  testEnvironment: "node",
-  testRegex: "./test/.*.js$",
+    clearMocks: true,
+    coverageDirectory: "coverage",
+    collectCoverageFrom: [
+        "dist/Unitime.js"
+    ],
+    testEnvironment: "node",
+    testRegex: "test/.*.test.js$",
 };
