@@ -3,7 +3,8 @@
 [![NPM Version][npm-version]][npm-url]
 [![License][license-badge]][license-url]
 
-Unitime is a lightweight JavaScript utility module which provides powerful, human-readable functions for converting various time units. The project was inspired by Java's [TimeUnit](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/TimeUnit.html) by Doug Lea.
+
+Unitime is a lightweight JavaScript utility module which provides powerful, human-readable functions for converting various time units. The project was inspired by Java's [TimeUnit](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/TimeUnit.html) by [Doug Lea](http://g.oswego.edu/).
 
 ## Human-readable, yet concise
 
@@ -25,7 +26,7 @@ npm install unitime
 [license-url]: https://opensource.org/licenses/MIT
 
 ## Description
-Unitime provides lightweight methods for converting between different units of time with a human-readable syntax. The idea is reducing the mental load caused by interpreting complex time declarations like `24*60*60*1000` or `86400000` which both describe the number of milliseconds in a single day. Using this library we can simply write `` d`1` ``, or `d(1)` if you prefer to not use [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
+Unitime provides lightweight methods for converting between different units of time with a human-readable syntax. The idea is reducing the mental load caused by interpreting complex time declarations like `24*60*60*1000` or `86400000` which both describe the number of milliseconds in a single day. Using this library you can simply write `d(1)`, or `` `d(1)` `` if you prefer [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
 
 Time formats that are currently supported are:
 - Nanoseconds (ns)
@@ -36,7 +37,7 @@ Time formats that are currently supported are:
 - Hours (h)
 - Days (d)
 
-You can specify the target format on initialization to make the code even more concise. This is especially useful when writing configuration files with JavaScript:
+You can specify the target format on initialization to make the code even more concise. This is especially useful when writing configuration files in JavaScript:
 
 ```js
 const { d, h } = require("unitime").to("ms")
@@ -45,10 +46,9 @@ const config = {
     duration: d`7`, // evaluates to 604800000
     interval: h`12` // evaluates to 43200000
 }
-
 ```
 
-The implementation uses clever caching to keep as little information in memory as possible.
+The library is written entirely in [Typescript](https://www.typescriptlang.org/).
 
 ## Usage examples
 
