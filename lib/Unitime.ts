@@ -89,21 +89,6 @@ class Scale {
         this.maxSecs = Number.MAX_VALUE / this.secRatio;
     }
 
-    public static parse(source: string): Scale {
-        switch (source) {
-            case "ns": return Scale.nanoseconds;
-            case "us": return Scale.microseconds;
-            case "ms": return Scale.milliseconds;
-            case "s": return Scale.seconds;
-            case "min": return Scale.minutes;
-            case "h": return Scale.hours;
-            case "d": return Scale.days;
-            default: {
-                throw new Error(`Unrecognized time unit ${source}`);
-            }
-        }
-    }
-
     @lazy public static get nanoseconds() {
         return new Scale(Unit.NANO);
     }
@@ -133,62 +118,47 @@ class Scale {
     }
 }
 
-namespace Transform {
-    export function result(dura: number, src: Scale, dest?: string): number {
-        const duration = Number(dura);
-        if (!duration) {
-            throw new Error(`Failed to interpret "${dura}" as a number!`);
-        }
+type Converter = (source: Scale, duration: number) => number;
 
-        if (!dest) {
-            throw new Error("Incorrect initialization!");
-        }
-
-        switch (dest) {
-            case "ns": return toNanos(src, duration);
-            case "us": return toMicros(src, duration);
-            case "ms": return toMillis(src, duration);
-            case "s": return toSeconds(src, duration);
-            case "min": return toMinutes(src, duration);
-            case "h": return toHours(src, duration);
-            case "d": return toDays(src, duration);
+module Convert {
+    export function converter(unit: any): Converter {
+        switch (unit) {
+            case "ns": return toNanos;
+            case "us": return toMicros;
+            case "ms": return toMillis;
+            case "s": return toSeconds;
+            case "min": return toMinutes;
+            case "h": return toHours;
+            case "d": return toDays;
             default: {
-                throw new Error(`Unknown time unit ${dest}`);
+                throw new Error(`Unknown time unit ${unit}`);
             }
         }
     }
-    
-    export function converters(source: Scale, dura: number): Convertable {
-        const duration = Number(dura);
-        if (!duration) {
-            throw new Error(`Failed to interpret "${dura}" as a number!`);
-        }
 
-        const converter = (destination: string) =>
-            result.bind(null, duration, source, destination);
-
+    export function converters(source: Scale, duration: number): Convertable {
         return {
-            nanos: converter("ns"),
-            micros: converter("us"),
-            millis: converter("ms"),
-            seconds: converter("s"),
-            minutes: converter("min"),
-            hours: converter("h"),
-            days: converter("d")
+            nanos: toNanos.bind(null, source, duration),
+            micros: toMicros.bind(null, source, duration),
+            millis: toMillis.bind(null, source, duration),
+            seconds: toSeconds.bind(null, source, duration),
+            minutes: toMinutes.bind(null, source, duration),
+            hours: toHours.bind(null, source, duration),
+            days: toDays.bind(null, source, duration)
         }
     }
 
-    export function toUnit(src: Scale, dest: Scale, dura: number): number {
-        if (src.scale === dest.scale) {
+    function toUnit(source: Scale, destination: Scale, dura: number): number {
+        if (source.scale === destination.scale) {
             return dura;
-        } else if (src.scale < dest.scale) {
-            return dura / (dest.scale / src.scale);
-        } else if (dura > Number.MAX_VALUE / (src.scale / dest.scale)) {
+        } else if (source.scale < destination.scale) {
+            return dura / (destination.scale / source.scale);
+        } else if (dura > Number.MAX_VALUE / (source.scale / destination.scale)) {
             return Number.MAX_VALUE
-        } else if (dura < -(Number.MAX_VALUE / (src.scale / dest.scale))) {
+        } else if (dura < -(Number.MAX_VALUE / (source.scale / destination.scale))) {
             return Number.MIN_VALUE;
         } else {
-            return dura * (src.scale / dest.scale);
+            return dura * (source.scale / destination.scale);
         }
     }
 
@@ -259,85 +229,114 @@ namespace Transform {
     }
 }
 
+module Util {
+    export function asNumber(input: any = "keke"): number {
+        // Null and empty values evaluate to zero, omit this behavior
+        if (input === null || isNaN(input) || isEmptyString(input)) {
+            throw new Error(`Failed to interpret "${input}" as a number!`);
+        }
+        return Number(input);
+    }
+
+    function isEmptyString(input: any) {
+        return typeof input == "string" && !(input && input.trim()) 
+    }
+}
+
 class Unitime {
-    private destination?: string;
+    private converter: Converter;
 
-    public static ns(duration: number): Convertable {
+    public static ns(input: any): Convertable {
         const source: Scale = Scale.nanoseconds;
-        return Transform.converters(source, duration);
+        const duration = Util.asNumber(input);
+        return Convert.converters(source, duration);
     };
 
-    public static us(duration: number): Convertable {
+    public static us(input: any): Convertable {
         const source: Scale = Scale.microseconds;
-        return Transform.converters(source, duration);
+        const duration: number = Util.asNumber(input);
+        return Convert.converters(source, duration);
     };
 
-    public static ms(duration: number): Convertable {
+    public static ms(input: any): Convertable {
         const source: Scale = Scale.milliseconds;
-        return Transform.converters(source, duration);
+        const duration: number = Util.asNumber(input);
+        return Convert.converters(source, duration);
     };
 
-    public static s(duration: number): Convertable {
+    public static s(input: any): Convertable {
         const source: Scale = Scale.seconds;
-        return Transform.converters(source, duration);
+        const duration: number = Util.asNumber(input);
+        return Convert.converters(source, duration);
     };
 
-    public static min(duration: number): Convertable {
+    public static min(input: any): Convertable {
         const source: Scale = Scale.minutes;
-        return Transform.converters(source, duration);
+        const duration: number = Util.asNumber(input);
+        return Convert.converters(source, duration);
     };
 
-    public static h(duration: number): Convertable {
+    public static h(input: any): Convertable {
         const source: Scale = Scale.hours;
-        return Transform.converters(source, duration);
+        const duration: number = Util.asNumber(input);
+        return Convert.converters(source, duration);
     };
 
-    public static d(duration: number): Convertable {
+    public static d(input: any): Convertable {
         const source: Scale = Scale.days;
-        return Transform.converters(source, duration);
+        const duration: number = Util.asNumber(input);
+        return Convert.converters(source, duration);
     };
 
-    public ns = (duration: number): number => {
+    public ns = (input: any): number => {
         const source: Scale = Scale.nanoseconds;
-        return Transform.result(duration, source, this.destination);
+        const duration: number = Util.asNumber(input);
+        return this.converter(source, duration);
     }
 
-    public us = (duration: number): number => {
+    public us = (input: any): number => {
         const source: Scale = Scale.microseconds;
-        return Transform.result(duration, source, this.destination);
+        const duration: number = Util.asNumber(input);
+        return this.converter(source, duration);
     }
 
-    public ms = (duration: number): number => {
+    public ms = (input: any): number => {
         const source: Scale = Scale.milliseconds;
-        return Transform.result(duration, source, this.destination);
+        const duration: number = Util.asNumber(input);
+        return this.converter(source, duration);
     }
 
-    public s = (duration: number): number => {
+    public s = (input: any): number => {
         const source: Scale = Scale.seconds;
-        return Transform.result(duration, source, this.destination);
+        const duration: number = Util.asNumber(input);
+        return this.converter(source, duration);
     }
 
-    public min = (duration: number): number => {
+    public min = (input: any): number => {
         const source: Scale = Scale.minutes;
-        return Transform.result(duration, source, this.destination);
+        const duration: number = Util.asNumber(input);
+        return this.converter(source, duration);
     }
 
-    public h = (duration: number): number => {
+    public h = (input: any): number => {
         const source: Scale = Scale.hours;
-        return Transform.result(duration, source, this.destination);
+        const duration: number = Util.asNumber(input);
+        return this.converter(source, duration);
     }
 
-    public d = (duration: number): number => {
+    public d = (input: any): number => {
         const source: Scale = Scale.days;
-        return Transform.result(duration, source, this.destination);
+        const duration: number = Util.asNumber(input);
+        return this.converter(source, duration);
     }
 
-    public static to(unit: string) {
-        return new Unitime(unit);
+    public static to(unit: any): Unitime {
+        const transformer = Convert.converter(unit);
+        return new Unitime(transformer);
     }
 
-    private constructor(destination: string) {
-        this.destination = destination;
+    private constructor(transformer: Converter) {
+        this.converter = transformer;
     }
 }
 
