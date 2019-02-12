@@ -2,6 +2,7 @@
 
 [![NPM Version][npm-version]][npm-url]
 [![Build Status][travis-badge]][travis-url]
+[![Code Coverage][coveralls-badge]][coveralls-url]
 [![License][license-badge]][license-url]
 
 Unitime is a lightweight JavaScript utility module which provides powerful, human-readable functions for converting various time units. The project was inspired by Java's [TimeUnit](https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/TimeUnit.html) by [Doug Lea](http://g.oswego.edu/).
@@ -75,3 +76,5 @@ This work by [Jonatan Hamberg](https://www.cs.helsinki.fi/u/hajo/) is licensed u
 [license-url]: https://opensource.org/licenses/MIT
 [travis-badge]: https://img.shields.io/travis/jhamberg/unitime/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/jhamberg/unitime
+[coveralls-badge]: https://img.shields.io/coveralls/jhamberg/unitime/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/jhamberg/unitime?branch=master
